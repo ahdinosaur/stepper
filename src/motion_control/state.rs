@@ -71,6 +71,13 @@ where
                 // it might just be a short breather before more work comes in.
 
                 if let Some(direction) = new_motion.take() {
+                    // If new direction is same as current direction,
+                    // then no need to set direction, continue on.
+                    if direction == *current_direction {
+                        state = State::Idle { driver, timer };
+                        continue;
+                    }
+
                     // A new motion has been started. This might override an
                     // ongoing one, but it makes no difference here.
                     //
